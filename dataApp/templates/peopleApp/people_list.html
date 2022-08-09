@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block  content %}
+<form method="get"> 
+  <input type="text"  name="nome" placeholder = "buscar por nome" />
+  <input type="submit" value="buscar" />
+</form>
+<form method="get"> 
+  <input type="date"  name="data" placeholder = "buscar por data" />
+  <input type="submit" value="buscar" />
+</form>
+  <table> 
+   <a href="{% url 'pessoa.novo' %} ">Novo</a> 
+    <thead>
+      <tr> 
+          <th>Nome</th>
+          <th>Data de Nascimento</th>
+          <th>Ativa</th>
+          <th>Actions</th>
+      <tr>
+    </thead>
+      <tbody>
+        {% for  pessoa in object_list  %}
+          <tr>
+            <td>{{pessoa.nome_completo}}</td>
+            <td>{{pessoa.data_nascimento| date:"d/m/Y" }}</td>
+            {%if pessoa.ativa%}
+            <td>sim <td>
+            {%else%}
+            <td>Não <td>
+            {%endif%}  
+            <td><a href=" {% url 'pessoa.alterar' pessoa.pk %} "> Alterar</td>
+            <td><a href=" {% url 'pessoa.contatos' pessoa.pk %} "> Ver Contatos </td>
+            <td><a href=" {% url 'pessoa.remover' pessoa.pk %} "> Deletar</td>
+          </tr>
+        {% endfor %}
+      </tbody> 
+  </table>
+{% endblock content   %}
